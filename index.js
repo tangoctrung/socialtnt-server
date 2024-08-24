@@ -49,7 +49,7 @@ app.use('/peerjs', peerServer);
 
 // connect to the database, mongodb://localhost:27017/SocialTNT
 mongoose
-  .connect(`${process.env.DB_URL}}`, {
+  .connect(`${process.env.DB_URL}`, {
     dbName: "socialtnt",
     useNewUrlParser: true,
     useUnifiedTopology: true,
