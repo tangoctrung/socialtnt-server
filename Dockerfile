@@ -6,12 +6,10 @@ COPY package*.json ./
 
 RUN npm install -g npm@10.8.2
 
-RUN npm install -g yarn
-
-RUN yarn install
+RUN npm install
 
 COPY . .
 
 EXPOSE 8800
 
-CMD [“yarn”, “start”]
+CMD ["node", "index.js"]
