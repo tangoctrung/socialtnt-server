@@ -58,6 +58,11 @@ mongoose
   .then(console.log("Connect to MongDB"))
   .catch((err) => console.error(err));
 
+console.log("process.env.DB_URL: ", process.env.DB_URL);
+console.log("process.env.ACCESS_TOKEN_SECRET: ", process.env.ACCESS_TOKEN_SECRET);
+
+
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
