@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --global yarn
+RUN npm install -g npm@10.8.2
+
+RUN npm install -g yarn
 
 RUN yarn install
 
