@@ -14,9 +14,9 @@ const conversationGroupRouter = require("./routers/conversationGroupRouter");
 const notificationRouter = require("./routers/notificationRouter");
 const fileConversationRouter = require("./routers/fileConversationRouter");
 const socketServer = require("./socketServer");
-const cors = require('cors');
+const cors = require("cors");
 const multer = require("multer");
-const { ExpressPeerServer } = require('peer');
+const { ExpressPeerServer } = require("peer");
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use("/images", express.static(path.join(__dirname, "/images")));
 // http://localhost:3000
 
 // Socket
-const httpServer = require('http').createServer(app);
+const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
   cors: {
     origin: "https://socialtnt.netlify.app",
@@ -37,15 +37,15 @@ const io = require("socket.io")(httpServer, {
 });
 
 io.on("connection", (socket) => {
-    socketServer(socket);
+  socketServer(socket);
 });
 
 // Create Peer Sever
 const peerServer = ExpressPeerServer(httpServer, {
-  path: '/'
+  path: "/",
 });
 
-app.use('/peerjs', peerServer);
+app.use("/peerjs", peerServer);
 
 // connect to the database, mongodb://localhost:27017/SocialTNT
 mongoose
@@ -60,9 +60,10 @@ mongoose
   .catch((err) => console.error(err));
 
 console.log("process.env.DB_URL: ", process.env.DB_URL);
-console.log("process.env.ACCESS_TOKEN_SECRET: ", process.env.ACCESS_TOKEN_SECRET);
-
-
+console.log(
+  "process.env.ACCESS_TOKEN_SECRET: ",
+  process.env.ACCESS_TOKEN_SECRET
+);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -72,8 +73,6 @@ const storage = multer.diskStorage({
     cb(null, req.body.name);
   },
 });
-
-
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
@@ -92,7 +91,7 @@ app.use("/api/conversationsgroup", conversationGroupRouter);
 app.use("/api/notifications", notificationRouter);
 app.use("/api/fileconversation", fileConversationRouter);
 
-const PORT = process.env.PORT || 8800;
+const PORT = process.env.PORT || 8801;
 httpServer.listen(PORT, () => {
-  console.log("server is running on port 8800");
+  console.log("server is running on port 8801");
 });
