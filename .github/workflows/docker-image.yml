@@ -33,4 +33,4 @@ jobs:
             docker pull 26022000/api-socialtnt:latest
             docker stop api-socialtnt || true
             docker rm api-socialtnt || true
-            docker run -d --name api-socialtnt -p 8801:8801 26022000/api-socialtnt:latest
+            docker run --env-file /home/trungtn/code/socialtnt-server/.env -d --name api-socialtnt -p 8801:8801 26022000/api-socialtnt:latest
