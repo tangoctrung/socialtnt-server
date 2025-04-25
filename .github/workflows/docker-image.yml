@@ -3,34 +3,25 @@ name: Docker Image CI
 on:
   push:
     branches: ["master"]
-  pull_request:
-    branches: ["master"]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Build Docker Image
-        run: |
-          docker build -t 26022000/api-socialtnt:latest .
-
-      - name: Push Image to Docker Hub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push 26022000/api-socialtnt:latest
-
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: 22
           script: |
-            docker pull 26022000/api-socialtnt:latest
-            docker stop api-socialtnt || true
-            docker rm api-socialtnt || true
-            docker run --env-file /home/trungtn/code/socialtnt-server/.env -d --name api-socialtnt -p 8801:8801 26022000/api-socialtnt:latest
+            cd /home/code/socialtnt-server
+            git fetch origin
+            git checkout master
+            git pull
+            docker build -t api-socialtnt .
+            docker stop api-socialtnt-container  true
+            docker rm api-socialtnt-container  true
+            docker run -d --name api-socialtnt-container -p 8800:8800 api-socialtnt

@@ -91,7 +91,7 @@ app.use("/api/conversationsgroup", conversationGroupRouter);
 app.use("/api/notifications", notificationRouter);
 app.use("/api/fileconversation", fileConversationRouter);
 
-const PORT = process.env.PORT || 8801;
+const PORT = process.env.PORT || 8800;
 httpServer.listen(PORT, () => {
-  console.log("server is running on port 8801");
+  console.log("server is running on port 8800");
 });
