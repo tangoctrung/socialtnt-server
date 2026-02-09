@@ -1,5 +1,5 @@
 ### SocialTNT 
-
+Update
 
 Tạo file ```.env``` theo file ```.env.example``` rồi điền thông tin vào.
 Sau đó chạy lệnh
